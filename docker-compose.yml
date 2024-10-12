@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+
+  #DB Service
+  hms_database:
+    image: postgres:latest
+    container_name: contacts_database_local
+    restart: always
+    volumes:
+      - ./.docker/pgdata:/var/lib/postgresql/data
+    tty: true
+    environment:
+      POSTGRES_DB: contactsdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5436:5432" # Map host port 5432 to container port 5432
+    networks:
+      - app_network
+
+#Docker Networks
+networks:
+  app_network:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
